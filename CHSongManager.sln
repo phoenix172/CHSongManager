@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHSongManager", "CHSongManager\CHSongManager.csproj", "{F3EB4AE1-B847-495A-B315-B8536D3462FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHSongManager.Tests", "CHSongManager.Tests\CHSongManager.Tests.csproj", "{B3AD3133-1060-4955-AC37-E7D9E74F2BCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F3EB4AE1-B847-495A-B315-B8536D3462FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3EB4AE1-B847-495A-B315-B8536D3462FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3EB4AE1-B847-495A-B315-B8536D3462FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3AD3133-1060-4955-AC37-E7D9E74F2BCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3AD3133-1060-4955-AC37-E7D9E74F2BCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3AD3133-1060-4955-AC37-E7D9E74F2BCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3AD3133-1060-4955-AC37-E7D9E74F2BCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
