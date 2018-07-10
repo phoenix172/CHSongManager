@@ -1,8 +1,37 @@
-﻿<Application x:Class="CHSongManager.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:CHSongManager">
+<Application x:Class="CHSongManager.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:CHSongManager" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d1p1:Ignorable="d" xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:CHSongManager.ViewModels"
+             xmlns:views="clr-namespace:CHSongManager.Views">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type viewModels:SongListViewModel}">
+                <views:SongListView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:SongsViewModel}">
+                <views:SongsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:MainViewModel}">
+                <views:MainView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:ConfigurationViewModel}">
+                <views:ConfigurationView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:SearchViewModel}">
+                <views:SearchView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:SelectProviderViewModel}">
+                <views:SelectProviderView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:DownloadableSongViewModel}">
+                <views:DownloadableSongView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:LocalSongViewModel}">
+                <views:LocalSongView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:DownloadTaskViewModel}">
+                <views:DownloadTaskView/>
+            </DataTemplate>
+
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

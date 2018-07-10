@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="CHSongManager.Views.SongsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CHSongManager.Views"
+             xmlns:utilities="clr-namespace:TinyMVVM.Utilities;assembly=TinyMVVM"
+             xmlns:viewModels="clr-namespace:CHSongManager.ViewModels"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type viewModels:SongsViewModel}}"
+             d:DesignHeight="300" d:DesignWidth="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <utilities:ApexGrid Rows="auto, *" Columns="*, auto">
+        <ContentControl Content="{Binding SearchVM}" Grid.Row="0"/>
+        <ContentControl Content="{Binding SelectProviderVM}" Grid.Column="1"/>
+        <ContentControl Content="{Binding SongListVM}" Grid.Row="1" Grid.ColumnSpan="2"/>
+    </utilities:ApexGrid>
+</UserControl>

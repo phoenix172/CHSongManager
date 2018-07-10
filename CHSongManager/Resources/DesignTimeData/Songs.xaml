@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:CHSongManager.Resources.DesignTimeData"
+                    xmlns:collections="clr-namespace:System.Collections.ObjectModel;assembly=System"
+                    xmlns:models="clr-namespace:CHSongManager.Models">
+    <x:Array Type="models:SimpleSong" x:Key="DesignTimeSongs">
+        <models:SimpleSong Name="Pesen1" Artist="Pesho" Album="1"/>
+        <models:SimpleSong Name="Pesen2" Artist="Peshoto" Album="2"/>
+        <models:SimpleSong Name="Pesen3" Artist="Gosho" Album="3"/>
+    </x:Array>
+</ResourceDictionary>

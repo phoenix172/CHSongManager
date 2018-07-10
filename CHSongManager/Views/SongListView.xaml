@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="CHSongManager.Views.SongListView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:CHSongManager.ViewModels"
+        xmlns:loading="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
+        xmlns:models="clr-namespace:CHSongManager.Models"
+        xmlns:helpers="clr-namespace:CHSongManager.Helpers"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="300"
+        d:DataContext="{d:DesignInstance Type={x:Type viewModels:SongListViewModel}, IsDesignTimeCreatable=True}">
+    <UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles/loadingring.xaml"/>
+    </UserControl.Resources>
+    <Grid>
+        <DataGrid ItemsSource="{Binding Songs}" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.ItemTemplate>
+                <DataTemplate DataType="viewModels:DownloadableSongViewModel">
+                    <Button Command="{Binding Download}">Download</Button>
+                </DataTemplate>
+            </DataGrid.ItemTemplate>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+                <DataGridTextColumn Binding="{Binding Artist}" Header="Artist"/>
+                <DataGridTextColumn Binding="{Binding Album}" Header="Album"/>
+                <DataGridTemplateColumn Header="Gosho">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ContentPresenter Content="{Binding}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <loading:LoadingIndicator IsActive="{Binding IsLoading}" RenderTransformOrigin="0.5,0.5"
+                                  Style="{DynamicResource LoadingIndicatorRingStyleKey}">
+            <loading:LoadingIndicator.RenderTransform>
+                <ScaleTransform ScaleX="3" ScaleY="3"></ScaleTransform>
+            </loading:LoadingIndicator.RenderTransform>
+            </loading:LoadingIndicator>
+    </Grid>
+</UserControl>
+

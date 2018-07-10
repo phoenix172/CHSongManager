@@ -1,9 +1,14 @@
-﻿using CHSongManager.Infrastructure;
-using CHSongManager.Infrastructure.Interfaces;
+﻿using System.ComponentModel;
+using CHSongManager.Models;
+using CHSongManager.Services;
+using CHSongManager.Services.Interfaces;
+using TinyMVVM.Interfaces;
 
 namespace CHSongManager.ViewModels.Interfaces
 {
-    public interface ISongListViewModel : IViewModel
+    public interface ISongListViewModel : INotifyPropertyChanged
     {
+        ICollectionView Songs { get; }
+        bool IsLoading { get; }
     }
 }

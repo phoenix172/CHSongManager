@@ -5,11 +5,15 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using CHSongManager.Infrastructure;
-using CHSongManager.Infrastructure.Interfaces;
+using CHSongManager.Models.Interfaces;
 using CHSongManager.Services;
 using CHSongManager.Services.Interfaces;
 using CHSongManager.ViewModels;
+using CHSongManager.ViewModels.Interfaces;
+using Ninject;
+using TinyMVVM;
+using TinyMVVM.Extensions;
+using TinyMVVM.Interfaces;
 
 namespace CHSongManager
 {
@@ -18,36 +22,61 @@ namespace CHSongManager
     /// </summary>
     public partial class App : Application
     {
-        private readonly IConfigurationService _configurationService;
-        private readonly IWindowManager _windowManager;
-        private readonly DialogService _dialogService;
+        private readonly IKernel _kernel;
+        private IWindowManager _windowManager;
 
         public App()
         {
-            _windowManager = new WindowManager(Windows);
-            _dialogService = new DialogService();
-            _configurationService = new ConfigurationService(_windowManager, _dialogService);
-            ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            InitializeComponent();
+            _kernel = ConfigureIoC();
+            _windowManager = Resolve<IWindowManager>();
+        }
+
+        private IKernel ConfigureIoC()
+        {
+            var kernel = new StandardKernel();
+
+            kernel.Bind<IDialogService>().To<DialogService>().InSingletonScope();
+            kernel.Bind<IWindowManager>().To<WindowManager>().InSingletonScope();
+            kernel.Bind<IConfigurationOptions>().To<ConfigurationOptions>().InSingletonScope();
+
+            kernel.Bind<DownloadManager>().ToSelf().InSingletonScope();
+            kernel.Bind<ISongDownloader>().ToMethod(c => c.Kernel.Get<DownloadManager>());
+
+            kernel.Bind<ISongDataSource>().To<SongDataSource>().InSingletonScope();
+
+            kernel.Bind<IMainViewModel>().To<MainViewModel>();
+            kernel.Bind<ISongListViewModel>().To<SongListViewModel>();
+            kernel.Bind<IConfigurationViewModel>().To<ConfigurationViewModel>();
+            kernel.Bind<IDownloadViewModel>().To<DownloadViewModel>();
+            kernel.Bind<ISongsViewModel>().To<SongsViewModel>();
+            kernel.Bind<ISearchViewModel>().To<SearchViewModel>();
+            kernel.Bind<ISelectProviderViewModel>().To<SelectProviderViewModel>();
+
+            kernel.Bind<ISongProvider>().To<LocalSongProvider>();
+            kernel.Bind<ISongProvider>().To<ChorusSongProvider>();
+            kernel.Bind<ISongProvider>().ToMethod(c => c.Kernel.Get<DownloadManager>());
+
+            return kernel;
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            if (Configure())
-                ShowMainWindow();
-            else
-                Shutdown();
-        }
-
-        private bool Configure()
-        {
-            return _configurationService.Configure();
+            ShowMainWindow();
         }
 
         private void ShowMainWindow()
         {
-            _windowManager.Show(new SongListViewModel());
-            ShutdownMode = ShutdownMode.OnMainWindowClose;
+            var mainViewModel = Resolve<IMainViewModel>();
+            _windowManager.ConfigureMaximized<IMainViewModel>();
+            _windowManager.Show(mainViewModel);
+        }
+
+        private T Resolve<T>()
+            where T : class
+        {
+            return _kernel.Get<T>();
         }
     }
 }
