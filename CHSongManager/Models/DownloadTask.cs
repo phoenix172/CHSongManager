@@ -15,8 +15,17 @@ namespace CHSongManager.Models
 
         public async Task RunAsync()
         {
-            await _song.DownloadAsync();
-            IsCompleted = true;
+            try
+            {
+                Status = "Downloading";
+                await _song.DownloadAsync();
+                Status = "Done";
+            }
+            catch (Exception ex)
+            {
+                Status = "Error";
+            }
+
             OnCompleted();
         }
 
@@ -26,7 +35,7 @@ namespace CHSongManager.Models
 
         public string Album => _song.Album;
 
-        public bool IsCompleted { get; private set; }
+        public string Status { get; private set; }
 
         public event EventHandler Completed;
 

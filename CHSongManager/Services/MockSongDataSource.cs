@@ -18,7 +18,9 @@ namespace CHSongManager.Services
         public bool IsRemoteSearch => false;
 
         public bool IsLoading { get; set; } = true;
-        public Task LoadAsync(SearchCriteria criteria)
+        public SearchCriteria Criteria { get; } = SearchCriteria.Empty;
+
+        public Task LoadAsync()
         {
             return Task.CompletedTask;
         }

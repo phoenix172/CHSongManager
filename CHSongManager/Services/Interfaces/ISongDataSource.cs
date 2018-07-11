@@ -10,6 +10,7 @@ namespace CHSongManager.Services.Interfaces
         ISongProvider SongProvider { get; set; }
         bool IsRemoteSearch { get; }
         bool IsLoading { get; }
-        Task LoadAsync(SearchCriteria criteria = null);
+        SearchCriteria Criteria { get; }
+        Task LoadAsync();
     }
 }

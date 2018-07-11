@@ -12,7 +12,6 @@ namespace CHSongManager.Services
     {
         private readonly ChorusApi _chorus;
         private readonly ISongDownloader _downloader;
-        private IEnumerable<Song> _lastResult;
         private readonly object _searchLock = new object();
 
         public ChorusSongProvider(ISongDownloader downloader)
@@ -25,18 +24,15 @@ namespace CHSongManager.Services
 
         public async Task<IEnumerable<ISong>> GetAsync(SearchCriteria criteria)
         {
-            return await Task.Run(() =>
-            {
-                var result = Search(criteria);
-                return result?.Select(MapSong)
-                        ?? Enumerable.Empty<ISong>();
-            });
+            var result = await SearchAsync(criteria);
+            return result?.Select(MapSong)
+                    ?? Enumerable.Empty<ISong>();
         }
 
-        private List<Song> Search(SearchCriteria criteria)
+        private async Task<List<Song>> SearchAsync(SearchCriteria criteria)
         {
             var filter = BuildFilter(criteria);
-            return _chorus.Search(filter);
+            return await _chorus.SearchAsync(filter);
         }
 
         public void ApplyConfiguration(IConfigurationOptions options)

@@ -9,5 +9,5 @@
              d:DataContext="{d:DesignInstance viewModels:DownloadTaskViewModel, IsDesignTimeCreatable=False}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <TextBlock Text="{Binding IsCompleted}"/>
+    <TextBlock Text="{Binding Status}"/>
 </UserControl>

@@ -36,8 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ChorusLib">
-      <HintPath>..\..\ChorusLib\ChorusLib\bin\Release\ChorusLib.dll</HintPath>
+    <Reference Include="ChorusLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ChorusLib\ChorusLib\bin\Debug\ChorusLib.dll</HintPath>
     </Reference>
     <Reference Include="LoadingIndicators.WPF, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LoadingIndicators.WPF.0.0.1\lib\LoadingIndicators.WPF.dll</HintPath>
@@ -80,7 +81,7 @@
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Helpers\SongMapper.cs" />
     <Compile Include="Models\DownloadableSong.cs" />
-    <Compile Include="Models\DownloadingSong.cs" />
+    <Compile Include="Models\DownloadTask.cs" />
     <Compile Include="Models\Interfaces\ISong.cs" />
     <Compile Include="Models\SearchCriteria.cs" />
     <Compile Include="Services\ChorusSongProvider.cs" />
@@ -99,9 +100,9 @@
     <Compile Include="Services\SongDataSource.cs" />
     <Compile Include="Services\SongDownloader.cs" />
     <Compile Include="Services\SongProvider.cs" />
-    <Compile Include="ViewModels\DownloadableSongViewModel - Copy.cs" />
-    <Compile Include="ViewModels\LocalSongViewModel.cs" />
     <Compile Include="ViewModels\DownloadableSongViewModel.cs" />
+    <Compile Include="ViewModels\LocalSongViewModel.cs" />
+    <Compile Include="ViewModels\DownloadTaskViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISearchViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISongsViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />

@@ -22,11 +22,11 @@
     <utilities:ApexGrid Rows="auto, auto" >
         <StackPanel Orientation="Horizontal">
             <Label   >Name:</Label>
-            <TextBox  Text="{sh:Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox  Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
             <Label   >Artist:</Label>
-            <TextBox  Text="{sh:Binding Artist, UpdateSourceTrigger=PropertyChanged, DesignTimeValue=Gosho}"/>
+            <TextBox  Text="{Binding Artist, UpdateSourceTrigger=PropertyChanged}"/>
             <Label   >Album:</Label>
-            <TextBox  Text="{sh:Binding Album, UpdateSourceTrigger=PropertyChanged, DesignTimeValue=Album}"/>
+            <TextBox  Text="{Binding Album, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Padding="30 3" Command="{Binding RemoteSearchCommand}" 
                     Visibility="{Binding IsRemoteSearch,Converter={StaticResource BooleanToVisibilityConverter}}">Search</Button>
         </StackPanel>

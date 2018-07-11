@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using CHSongManager.Models;
@@ -40,6 +42,7 @@ namespace CHSongManager.ViewModels
         }
 
         public ICollectionView Songs => _songDataSource.Songs;
+
         public bool IsLoading => _songDataSource.IsLoading;
     }
 }

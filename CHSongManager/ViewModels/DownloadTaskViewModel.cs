@@ -5,20 +5,20 @@ using TinyMVVM;
 
 namespace CHSongManager.ViewModels
 {
-    internal class DownloadableSongViewModel : ISong
+    internal class DownloadTaskViewModel : ViewModelBase, ISong
     {
-        private readonly DownloadableSong _song;
+        private readonly DownloadTask _song;
 
-        public DownloadableSongViewModel(DownloadableSong song)
+        public DownloadTaskViewModel(DownloadTask song)
         {
             _song = song;
-            Download = new RelayCommand(async () => await song.DownloadAsync());
+            _song.Completed += (s,e) => OnPropertyChanged(nameof(Status));
         }
-
-        public ICommand Download { get; }
-
+        
         public string Artist => _song.Artist;
         public string Name => _song.Name;
         public string Album => _song.Album;
+
+        public string Status => _song.Status;
     }
 }

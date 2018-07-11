@@ -44,9 +44,10 @@ namespace CHSongManager.ViewModels
             PropertyChanged += SearchViewModel_PropertyChanged;
         }
 
-        public string Artist { get; set; }
-        public string Name { get; set; }
-        public string Album { get; set; }
+        private SearchCriteria Criteria => _songDataSource.Criteria;
+        public string Artist { get => Criteria.Artist; set => Criteria.Artist = value; }
+        public string Name { get => Criteria.Name; set => Criteria.Name = value; }
+        public string Album { get => Criteria.Album; set => Criteria.Album = value; }
 
         public bool IsRemoteSearch => _songDataSource.IsRemoteSearch;
 
@@ -79,12 +80,7 @@ namespace CHSongManager.ViewModels
 
         private async void SearchAsync()
         {
-            await _songDataSource.LoadAsync(new SearchCriteria
-            {
-                Artist = Artist,
-                Album = Album,
-                Name = Name
-            });
+            await _songDataSource.LoadAsync();
         }
     }
 }

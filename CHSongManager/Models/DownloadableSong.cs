@@ -7,7 +7,7 @@ namespace CHSongManager.Models
 {
     public class DownloadableSong : ISong
     {
-        private Song _chorusSong;
+        private readonly Song _chorusSong;
         private readonly ISongDownloader _downloader;
 
         public DownloadableSong(Song chorusSong, ISongDownloader downloader)

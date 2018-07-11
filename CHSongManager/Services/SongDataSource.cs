@@ -17,6 +17,12 @@ namespace CHSongManager.Services
     {
         private ISongProvider _songProvider;
 
+        public SongDataSource()
+        {
+            Criteria = SearchCriteria.Empty;
+        }
+
+        public SearchCriteria Criteria { get; }
         public ICollectionView Songs { get; private set; }
         public bool IsLoading { get; private set; }
         public bool IsRemoteSearch => false;
@@ -31,10 +37,10 @@ namespace CHSongManager.Services
             }
         }
 
-        public async Task LoadAsync(SearchCriteria criteria = null)
+        public async Task LoadAsync()
         {
             IsLoading = true;
-            var songs = await SongProvider.GetAsync(criteria ?? SearchCriteria.Empty);
+            var songs = await SongProvider.GetAsync(Criteria);
             await Task.Run(()=> Songs = CollectionViewSource.GetDefaultView(SongMapper.Map(songs)));
             IsLoading = false;
         }

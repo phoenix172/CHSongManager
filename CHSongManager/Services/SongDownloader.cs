@@ -11,11 +11,12 @@ namespace CHSongManager.Services
 
         public SongDownloader(IConfigurationOptions options)
         {
-            ApplyConfiguration(options);        }
+            ApplyConfiguration(options);
+        }
 
-        public Task DownloadAsync(Song song)
+        public async Task DownloadAsync(Song song)
         {
-            return Task.Run(() => _songDownloader.Download(song));
+            await _songDownloader.DownloadAsync(song);
         }
 
         public void ApplyConfiguration(IConfigurationOptions options)
