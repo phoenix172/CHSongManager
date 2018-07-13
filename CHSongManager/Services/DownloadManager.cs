@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ChorusLib;
 using CHSongManager.Models;
@@ -10,12 +11,12 @@ namespace CHSongManager.Services
     public class DownloadManager : ISongProvider, ISongDownloader
     {
         private readonly List<DownloadTask> _downloadTasks;
-        private readonly ISongDownloader _downloader;
+        private readonly ChorusSongDownloader _downloader;
 
         public DownloadManager(IConfigurationOptions options)
         {
             _downloadTasks = new List<DownloadTask>();
-            _downloader = new SongDownloader(options);
+            _downloader = new ChorusSongDownloader(options);
         }
 
         public string Name => "Downloading";
@@ -30,12 +31,19 @@ namespace CHSongManager.Services
             _downloader.ApplyConfiguration(options);
         }
 
-        public async Task DownloadAsync(Song song)
+        public async Task<bool> DownloadAsync(DownloadableSong song)
         {
-            var downloadableSong = new DownloadableSong(song, _downloader);
-            var task = new DownloadTask(downloadableSong);
+            if (IsAlreadyDownloadingSong(song))
+                return false;
+            var task = new DownloadTask(song);
             _downloadTasks.Add(task);
             await task.RunAsync();
+            return true;
+        }
+
+        private bool IsAlreadyDownloadingSong(DownloadableSong song)
+        {
+            return _downloadTasks.Any(x => x.Name == song.Name && x.Album == song.Album && x.Artist == song.Artist);
         }
     }
 }

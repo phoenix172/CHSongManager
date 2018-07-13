@@ -6,22 +6,35 @@ using System.Threading.Tasks;
 using CHSongManager.Models;
 using CHSongManager.Models.Interfaces;
 using CHSongManager.ViewModels;
+using TinyMVVM;
 
 namespace CHSongManager.Helpers
 {
-    public static class SongMapper
+    public interface ISongMapper
     {
-        public static IEnumerable<ISong> Map(IEnumerable<ISong> source)
+        IEnumerable<ISong> Map(IEnumerable<ISong> source);
+    }
+
+    public class SongMapper : ISongMapper
+    {
+        private readonly IDialogService _dialogService;
+
+        public SongMapper(IDialogService dialogService)
         {
-            return source.Select(MapSong);
+            _dialogService = dialogService;
         }
 
-        private static ISong MapSong(ISong song)
+        public IEnumerable<ISong> Map(IEnumerable<ISong> source)
+        {
+            return source.Select(Map);
+        }
+
+        private ISong Map(ISong song)
         {
             switch (song)
             {
                 case DownloadableSong downloadableSong:
-                    return new DownloadableSongViewModel(downloadableSong);
+                    return new DownloadableSongViewModel(downloadableSong, _dialogService);
                 case LocalSong localSong:
                     return new LocalSongViewModel(localSong);
                 case DownloadTask localSong:

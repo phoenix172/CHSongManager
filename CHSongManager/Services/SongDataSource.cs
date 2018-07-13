@@ -15,10 +15,12 @@ namespace CHSongManager.Services
 {
     public class SongDataSource : ObservableObject, ISongDataSource
     {
+        private readonly ISongMapper _songMapper;
         private ISongProvider _songProvider;
 
-        public SongDataSource()
+        public SongDataSource(ISongMapper songMapper)
         {
+            _songMapper = songMapper;
             Criteria = SearchCriteria.Empty;
         }
 
@@ -41,7 +43,8 @@ namespace CHSongManager.Services
         {
             IsLoading = true;
             var songs = await SongProvider.GetAsync(Criteria);
-            await Task.Run(()=> Songs = CollectionViewSource.GetDefaultView(SongMapper.Map(songs)));
+            await Task.Run(()=> 
+                Songs = CollectionViewSource.GetDefaultView(_songMapper.Map(songs)));
             IsLoading = false;
         }
 

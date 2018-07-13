@@ -5,12 +5,14 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using CHSongManager.Helpers;
 using CHSongManager.Models.Interfaces;
 using CHSongManager.Services;
 using CHSongManager.Services.Interfaces;
 using CHSongManager.ViewModels;
 using CHSongManager.ViewModels.Interfaces;
 using Ninject;
+using Ninject.Extensions.NamedScope;
 using TinyMVVM;
 using TinyMVVM.Extensions;
 using TinyMVVM.Interfaces;
@@ -43,19 +45,20 @@ namespace CHSongManager
             kernel.Bind<DownloadManager>().ToSelf().InSingletonScope();
             kernel.Bind<ISongDownloader>().ToMethod(c => c.Kernel.Get<DownloadManager>());
 
-            kernel.Bind<ISongDataSource>().To<SongDataSource>().InSingletonScope();
 
-            kernel.Bind<IMainViewModel>().To<MainViewModel>();
-            kernel.Bind<ISongListViewModel>().To<SongListViewModel>();
-            kernel.Bind<IConfigurationViewModel>().To<ConfigurationViewModel>();
-            kernel.Bind<IDownloadViewModel>().To<DownloadViewModel>();
-            kernel.Bind<ISongsViewModel>().To<SongsViewModel>();
-            kernel.Bind<ISearchViewModel>().To<SearchViewModel>();
-            kernel.Bind<ISelectProviderViewModel>().To<SelectProviderViewModel>();
+            kernel.Bind<IMainViewModel>().To<MainViewModel>().DefinesNamedScope(nameof(App));
+            kernel.Bind<IConfigurationViewModel>().To<ConfigurationViewModel>().InNamedScope(nameof(App));
+
+            kernel.Bind<ISongsViewModel>().To<SongsViewModel>().InNamedScope(nameof(App));
+            kernel.Bind<ISongDataSource>().To<SongDataSource>().InNamedScope(nameof(App));
+            kernel.Bind<ISearchViewModel>().To<SearchViewModel>().InNamedScope(nameof(App));
+            kernel.Bind<ISelectProviderViewModel>().To<SelectProviderViewModel>().InNamedScope(nameof(App));
+            kernel.Bind<ISongListViewModel>().To<SongListViewModel>().InNamedScope(nameof(App));
 
             kernel.Bind<ISongProvider>().To<LocalSongProvider>();
             kernel.Bind<ISongProvider>().To<ChorusSongProvider>();
             kernel.Bind<ISongProvider>().ToMethod(c => c.Kernel.Get<DownloadManager>());
+            kernel.Bind<ISongMapper>().To<SongMapper>();
 
             return kernel;
         }

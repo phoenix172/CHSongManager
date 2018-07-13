@@ -30,6 +30,12 @@
             <DataTemplate DataType="{x:Type viewModels:DownloadTaskViewModel}">
                 <views:DownloadTaskView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:ChorusProviderViewModel}">
+                <views:ChorusProviderView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:NullProviderViewModel}">
+                <ContentControl/>
+            </DataTemplate>
 
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         </ResourceDictionary>

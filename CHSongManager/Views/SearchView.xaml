@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:CHSongManager.Views"
              xmlns:utilities="clr-namespace:TinyMVVM.Utilities;assembly=TinyMVVM"
              xmlns:viewModels="clr-namespace:CHSongManager.ViewModels"
-             xmlns:sh="clr-namespace:ShanoBinding;assembly=ShanoBinding"
              mc:Ignorable="d" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False, Type=viewModels:SearchViewModel}">
     <UserControl.Resources>

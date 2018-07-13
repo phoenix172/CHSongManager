@@ -4,19 +4,20 @@ using CHSongManager.Services.Interfaces;
 
 namespace CHSongManager.Services
 {
-    public class SongDownloader : ISongDownloader
+    public class ChorusSongDownloader
     {
         private string _downloadPath;
         private ChorusLib.SongDownloader _songDownloader;
 
-        public SongDownloader(IConfigurationOptions options)
+        public ChorusSongDownloader(IConfigurationOptions options)
         {
             ApplyConfiguration(options);
         }
 
-        public async Task DownloadAsync(Song song)
+        public async Task<bool> DownloadAsync(Song song)
         {
             await _songDownloader.DownloadAsync(song);
+            return true;
         }
 
         public void ApplyConfiguration(IConfigurationOptions options)

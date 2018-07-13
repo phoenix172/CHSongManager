@@ -20,9 +20,9 @@ namespace CHSongManager.Models
         public string Name => _chorusSong.Name;
         public string Album => _chorusSong.Album;
 
-        public Task DownloadAsync()
+        public Task<bool> DownloadAsync()
         {
-            return _downloader.DownloadAsync(_chorusSong);
+            return _downloader.DownloadAsync(this);
         }
     }
 }

@@ -15,9 +15,10 @@
             <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <utilities:ApexGrid Rows="auto, *" Columns="*, auto">
+    <utilities:ApexGrid Rows="auto, *" Columns="*, auto,auto">
         <ContentControl Content="{Binding SearchVM}" Grid.Row="0"/>
-        <ContentControl Content="{Binding SelectProviderVM}" Grid.Column="1"/>
-        <ContentControl Content="{Binding SongListVM}" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <ContentControl Content="{Binding ProviderVM}" Grid.Column="1"/>
+        <ContentControl Content="{Binding SelectProviderVM}" Grid.Column="2"/>
+        <ContentControl Content="{Binding SongListVM}" Grid.Row="1" Grid.ColumnSpan="3"/>
     </utilities:ApexGrid>
 </UserControl>

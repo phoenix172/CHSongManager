@@ -23,7 +23,7 @@
                 <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
                 <DataGridTextColumn Binding="{Binding Artist}" Header="Artist"/>
                 <DataGridTextColumn Binding="{Binding Album}" Header="Album"/>
-                <DataGridTemplateColumn Header="Gosho">
+                <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ContentPresenter Content="{Binding}"/>

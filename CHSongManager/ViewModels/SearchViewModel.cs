@@ -80,7 +80,15 @@ namespace CHSongManager.ViewModels
 
         private async void SearchAsync()
         {
+            OnSearching();
             await _songDataSource.LoadAsync();
+        }
+
+        public event EventHandler Searching;
+
+        protected virtual void OnSearching()
+        {
+            Searching?.Invoke(this, EventArgs.Empty);
         }
     }
 }

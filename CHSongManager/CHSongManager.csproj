@@ -36,29 +36,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ChorusLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ChorusLib\ChorusLib\bin\Debug\ChorusLib.dll</HintPath>
-    </Reference>
     <Reference Include="LoadingIndicators.WPF, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LoadingIndicators.WPF.0.0.1\lib\LoadingIndicators.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject.Extensions.NamedScope, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Extensions.NamedScope.3.3.0\lib\net45\Ninject.Extensions.NamedScope.dll</HintPath>
+    </Reference>
     <Reference Include="PropertyChanged, Version=2.5.8.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.2.5.8\lib\net452\PropertyChanged.dll</HintPath>
-    </Reference>
-    <Reference Include="ShanoBinding, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ShanoBinding.1.0.0\lib\net45\ShanoBinding.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -79,6 +78,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\Extensions.cs" />
+    <Compile Include="Helpers\ProviderMapper.cs" />
     <Compile Include="Helpers\SongMapper.cs" />
     <Compile Include="Models\DownloadableSong.cs" />
     <Compile Include="Models\DownloadTask.cs" />
@@ -98,16 +98,21 @@
     <Compile Include="Services\NullSongProvider.cs" />
     <Compile Include="Services\RemoteSearchable.cs" />
     <Compile Include="Services\SongDataSource.cs" />
-    <Compile Include="Services\SongDownloader.cs" />
+    <Compile Include="Services\ChorusSongDownloader.cs" />
     <Compile Include="Services\SongProvider.cs" />
+    <Compile Include="ViewModels\ChorusProviderViewModel.cs" />
     <Compile Include="ViewModels\DownloadableSongViewModel.cs" />
     <Compile Include="ViewModels\LocalSongViewModel.cs" />
     <Compile Include="ViewModels\DownloadTaskViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISearchViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISongsViewModel.cs" />
+    <Compile Include="ViewModels\NullProviderViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="ViewModels\SelectProviderViewModel.cs" />
     <Compile Include="ViewModels\SongsViewModel.cs" />
+    <Compile Include="Views\ChorusProviderView.xaml.cs">
+      <DependentUpon>ChorusProviderView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
     </Compile>
@@ -136,6 +141,10 @@
       <DependentUpon>SongsView.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\DesignTimeData\Songs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ChorusProviderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -183,7 +192,6 @@
     <Compile Include="Models\Interfaces\IConfigurationService.cs" />
     <Compile Include="Services\LocalSongProvider.cs" />
     <Compile Include="ViewModels\ConfigurationViewModel.cs" />
-    <Compile Include="ViewModels\DownloadViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDownloadViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IMainViewModel.cs" />
@@ -223,6 +231,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ChorusLib\ChorusLib\ChorusLib.csproj">
+      <Project>{18f9e3bd-db86-4be8-b947-0b4b14fb9778}</Project>
+      <Name>ChorusLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TinyMVVM\TinyMVVM.csproj">
       <Project>{cd0a8c83-1256-4b9d-915e-5fc06567b082}</Project>
       <Name>TinyMVVM</Name>

@@ -1,4 +1,5 @@
-﻿using CHSongManager.Services.Interfaces;
+﻿using System;
+using CHSongManager.Services.Interfaces;
 using System.Windows.Input;
 
 namespace CHSongManager.ViewModels.Interfaces
@@ -10,5 +11,6 @@ namespace CHSongManager.ViewModels.Interfaces
         string Album { get; set; }
         ICommand RemoteSearchCommand { get; set; }
         ITimer Timer { set; }
+        event EventHandler Searching;
     }
 }

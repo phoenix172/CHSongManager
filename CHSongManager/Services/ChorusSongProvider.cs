@@ -21,6 +21,7 @@ namespace CHSongManager.Services
         }
 
         public string Name => "Chorus";
+        public int Page { get; set; } = 1;
 
         public async Task<IEnumerable<ISong>> GetAsync(SearchCriteria criteria)
         {
@@ -32,7 +33,7 @@ namespace CHSongManager.Services
         private async Task<List<Song>> SearchAsync(SearchCriteria criteria)
         {
             var filter = BuildFilter(criteria);
-            return await _chorus.SearchAsync(filter);
+            return await _chorus.SearchAsync(filter, Page);
         }
 
         public void ApplyConfiguration(IConfigurationOptions options)
