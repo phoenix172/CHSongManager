@@ -7,7 +7,7 @@ namespace CHSongManager.Services
     public class ChorusSongDownloader
     {
         private string _downloadPath;
-        private ChorusLib.SongDownloader _songDownloader;
+        private SongDownloader _songDownloader;
 
         public ChorusSongDownloader(IConfigurationOptions options)
         {
@@ -23,7 +23,7 @@ namespace CHSongManager.Services
         public void ApplyConfiguration(IConfigurationOptions options)
         {
             _downloadPath = options.SongFolder;
-            _songDownloader = new ChorusLib.SongDownloader(_downloadPath);
+            _songDownloader = new SongDownloader(_downloadPath);
         }
     }
 }

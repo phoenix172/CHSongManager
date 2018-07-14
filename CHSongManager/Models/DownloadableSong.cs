@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ChorusLib;
 using CHSongManager.Models.Interfaces;
+using CHSongManager.Services;
 using CHSongManager.Services.Interfaces;
 
 namespace CHSongManager.Models
@@ -8,12 +9,13 @@ namespace CHSongManager.Models
     public class DownloadableSong : ISong
     {
         private readonly Song _chorusSong;
-        private readonly ISongDownloader _downloader;
+        private readonly ChorusSongDownloader _chorusDownloader;
 
-        public DownloadableSong(Song chorusSong, ISongDownloader downloader)
+        public DownloadableSong(Song chorusSong,
+            ChorusSongDownloader chorusDownloader)
         {
             _chorusSong = chorusSong;
-            _downloader = downloader;
+            _chorusDownloader = chorusDownloader;
         }
 
         public string Artist => _chorusSong.Artist;
@@ -22,7 +24,7 @@ namespace CHSongManager.Models
 
         public Task<bool> DownloadAsync()
         {
-            return _downloader.DownloadAsync(this);
+            return _chorusDownloader.DownloadAsync(_chorusSong);
         }
     }
 }

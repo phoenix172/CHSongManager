@@ -11,12 +11,10 @@ namespace CHSongManager.Services
     public class DownloadManager : ISongProvider, ISongDownloader
     {
         private readonly List<DownloadTask> _downloadTasks;
-        private readonly ChorusSongDownloader _downloader;
 
         public DownloadManager(IConfigurationOptions options)
         {
             _downloadTasks = new List<DownloadTask>();
-            _downloader = new ChorusSongDownloader(options);
         }
 
         public string Name => "Downloading";
@@ -28,7 +26,6 @@ namespace CHSongManager.Services
 
         public void ApplyConfiguration(IConfigurationOptions options)
         {
-            _downloader.ApplyConfiguration(options);
         }
 
         public async Task<bool> DownloadAsync(DownloadableSong song)

@@ -11,13 +11,13 @@ namespace CHSongManager.Services
     public class ChorusSongProvider : ISongProvider, IConfigurable
     {
         private readonly ChorusApi _chorus;
-        private readonly ISongDownloader _downloader;
         private readonly object _searchLock = new object();
+        private readonly ChorusSongDownloader _downloader;
 
-        public ChorusSongProvider(ISongDownloader downloader)
+        public ChorusSongProvider(IConfigurationOptions options)
         {
             _chorus = new ChorusApi("chorus.fightthe.pw/api");
-            _downloader = downloader;
+            _downloader = new ChorusSongDownloader(options);
         }
 
         public string Name => "Chorus";

@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using CHSongManager.Models;
 using CHSongManager.Models.Interfaces;
+using CHSongManager.Services.Interfaces;
 using TinyMVVM;
 
 namespace CHSongManager.ViewModels
@@ -10,11 +11,15 @@ namespace CHSongManager.ViewModels
     {
         private readonly DownloadableSong _song;
         private readonly IDialogService _dialogService;
+        private readonly ISongDownloader _downloader;
 
-        public DownloadableSongViewModel(DownloadableSong song, IDialogService dialogService)
+        public DownloadableSongViewModel(DownloadableSong song,
+            IDialogService dialogService,
+            ISongDownloader downloader)
         {
             _song = song;
             _dialogService = dialogService;
+            _downloader = downloader;
             Download = new RelayCommand(async ()=>await DownloadAsync());
         }
 
@@ -27,7 +32,7 @@ namespace CHSongManager.ViewModels
 
         public async Task DownloadAsync(bool suppressError = false)
         {
-            bool result = await _song.DownloadAsync();
+            bool result = await _downloader.DownloadAsync(_song);
             if(!result && !suppressError)
                 _dialogService.ShowError("Song has already been downloaded!");
         }

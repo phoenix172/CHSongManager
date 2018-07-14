@@ -42,10 +42,6 @@ namespace CHSongManager
             kernel.Bind<IWindowManager>().To<WindowManager>().InSingletonScope();
             kernel.Bind<IConfigurationOptions>().To<ConfigurationOptions>().InSingletonScope();
 
-            kernel.Bind<DownloadManager>().ToSelf().InSingletonScope();
-            kernel.Bind<ISongDownloader>().ToMethod(c => c.Kernel.Get<DownloadManager>());
-
-
             kernel.Bind<IMainViewModel>().To<MainViewModel>().DefinesNamedScope(nameof(App));
             kernel.Bind<IConfigurationViewModel>().To<ConfigurationViewModel>().InNamedScope(nameof(App));
 
@@ -55,9 +51,14 @@ namespace CHSongManager
             kernel.Bind<ISelectProviderViewModel>().To<SelectProviderViewModel>().InNamedScope(nameof(App));
             kernel.Bind<ISongListViewModel>().To<SongListViewModel>().InNamedScope(nameof(App));
 
+            kernel.Bind<DownloadManager>().ToSelf();
+            var downloadManager = kernel.Get<DownloadManager>();
+            kernel.Bind<ISongDownloader>().ToConstant(downloadManager).InNamedScope(nameof(App));
+
             kernel.Bind<ISongProvider>().To<LocalSongProvider>();
             kernel.Bind<ISongProvider>().To<ChorusSongProvider>();
-            kernel.Bind<ISongProvider>().ToMethod(c => c.Kernel.Get<DownloadManager>());
+            kernel.Bind<ISongProvider>().ToConstant(downloadManager).InNamedScope(nameof(App));
+
             kernel.Bind<ISongMapper>().To<SongMapper>();
 
             return kernel;
