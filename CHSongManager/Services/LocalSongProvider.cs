@@ -46,9 +46,9 @@ namespace CHSongManager.Services
 
         private Func<ISong, bool> SearchPredicate(SearchCriteria criteria)
         {
-            return song => (song.Name.ToLower()?.Contains(criteria.Name.ToLower() ?? "") ?? false) &&
-                             (song.Album.ToLower()?.Contains(criteria.Album.ToLower() ?? "") ?? false) &&
-                             (song.Artist.ToLower()?.Contains(criteria.Artist.ToLower() ?? "") ?? false);
+            return song => (song.Name?.Contains(criteria.Name ?? "") ?? false) &&
+                             (song.Album?.Contains(criteria.Album ?? "") ?? false) &&
+                             (song.Artist?.Contains(criteria.Artist ?? "") ?? false);
         }
 
         public void ApplyConfiguration(IConfigurationOptions options)
