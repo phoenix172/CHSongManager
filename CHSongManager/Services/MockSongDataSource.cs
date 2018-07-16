@@ -22,7 +22,7 @@ namespace CHSongManager.Services
 
         public Task LoadAsync()
         {
-            return Task.CompletedTask;
+            return Task.FromResult(false);
         }
 
         public ICollectionView Songs { get; }

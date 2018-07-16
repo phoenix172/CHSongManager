@@ -11,7 +11,7 @@ namespace TinyMVVM
     public class WindowManager : IWindowManager
     {
         private readonly ConcurrentBag<Window> _windows = new ConcurrentBag<Window>();
-        public IReadOnlyCollection<Window> Windows => _windows;
+        public IReadOnlyCollection<Window> Windows => (IReadOnlyCollection<Window>)_windows;
 
         public WindowManager()
         {
