@@ -13,12 +13,13 @@ namespace CHSongManager.Services
     {
         public SearchCriteria SearchCriteria { get; } = new SearchCriteria();
         public event PropertyChangedEventHandler PropertyChanged;
-        public ISongProvider SongProvider { get; set; }
+        public ISongProvider CurrentProvider { get; set; }
 
         public bool IsRemoteSearch => false;
 
         public bool IsLoading { get; set; } = true;
         public SearchCriteria Criteria { get; } = SearchCriteria.Empty;
+        public ProviderManager Providers { get; } = new ProviderManager(Services.SongProvider.MockProviders());
 
         public Task LoadAsync()
         {

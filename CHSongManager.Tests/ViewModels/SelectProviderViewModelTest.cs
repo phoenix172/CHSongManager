@@ -15,15 +15,18 @@ namespace CHSongManager.Tests.ViewModels
     public class SelectProviderViewModelTest
     {
         private ISongDataSource _dataSource;
-        private List<ISongProvider> _providers;
         private ISelectProviderViewModel _viewModel;
+        private IEnumerable<ISongProvider> _providers;
 
         [SetUp]
         public void SetUp()
         {
             _dataSource = Substitute.For<ISongDataSource>();
-            _providers = SongProvider.MockProviders().ToList();
-            _viewModel = new SelectProviderViewModel(_dataSource, _providers);
+            _providers = SongProvider.MockProviders();
+            var providerManager = new ProviderManager(_providers);
+            _dataSource.Providers.Returns(providerManager);
+            _dataSource.CurrentProvider.Returns(c=>providerManager.Current);
+            _viewModel = new SelectProviderViewModel(_dataSource);
         }
 
         [Test]
@@ -35,7 +38,7 @@ namespace CHSongManager.Tests.ViewModels
         }
 
         [Test]
-        public async void Load_SetsCurrentProvider_ToFirst()
+        public async Task Load_SetsCurrentProvider_ToFirst()
         {
             await _viewModel.LoadAsync();
 
@@ -43,11 +46,11 @@ namespace CHSongManager.Tests.ViewModels
         }
 
         [Test]
-        public async void Load_SetsCurrentDataSourceProvider_ToFirst()
+        public async Task Load_SetsCurrentDataSourceProvider_ToFirst()
         {
             await _viewModel.LoadAsync();
 
-            Assert.That(_dataSource.SongProvider, Is.EqualTo(_providers.First()));
+            Assert.That(_dataSource.CurrentProvider, Is.EqualTo(_providers.First()));
         }
 
         [Test]
@@ -56,7 +59,7 @@ namespace CHSongManager.Tests.ViewModels
             await _viewModel.LoadAsync();
             _viewModel.Providers.MoveCurrentToLast();
 
-            Assert.That(_dataSource.SongProvider, Is.EqualTo(_providers.Last()));
+            Assert.That(_dataSource.CurrentProvider, Is.EqualTo(_providers.Last()));
         }
 
         [Test]

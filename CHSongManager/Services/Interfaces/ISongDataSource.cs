@@ -7,10 +7,11 @@ namespace CHSongManager.Services.Interfaces
     public interface ISongDataSource : INotifyPropertyChanged, IConfigurable
     {
         ICollectionView Songs { get; }
-        ISongProvider SongProvider { get; set; }
+        ISongProvider CurrentProvider { get; set; }
         bool IsRemoteSearch { get; }
         bool IsLoading { get; }
         SearchCriteria Criteria { get; }
+        ProviderManager Providers { get; }
         Task LoadAsync();
     }
 }

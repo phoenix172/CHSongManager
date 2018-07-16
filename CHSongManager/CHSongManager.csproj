@@ -118,6 +118,7 @@
     <Compile Include="Services\LocalSearchable.cs" />
     <Compile Include="Services\MockSongDataSource.cs" />
     <Compile Include="Services\NullSongProvider.cs" />
+    <Compile Include="Services\ProviderManager.cs" />
     <Compile Include="Services\RemoteSearchable.cs" />
     <Compile Include="Services\SongDataSource.cs" />
     <Compile Include="Services\ChorusSongDownloader.cs" />

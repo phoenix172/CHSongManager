@@ -47,7 +47,7 @@ namespace CHSongManager.ViewModels
 
             LoadedCommand = new RelayCommand(async ()=>await LoadedAsync());
 
-            PropagateChanges(_songDataSource, nameof(ISongDataSource.SongProvider), nameof(ProviderVM));
+            PropagateChanges(_songDataSource, nameof(ISongDataSource.CurrentProvider), nameof(ProviderVM));
         }
 
         private async Task LoadedAsync()
@@ -64,9 +64,9 @@ namespace CHSongManager.ViewModels
 
         private IProviderViewModel GetProviderViewModel()
         {
-            if (_providerViewModel?.SongProvider != _songDataSource.SongProvider)
+            if (_providerViewModel?.SongProvider != _songDataSource.CurrentProvider)
             {
-                _providerViewModel = _providerMapper.Map(_songDataSource.SongProvider);
+                _providerViewModel = _providerMapper.Map(_songDataSource.CurrentProvider);
             }
 
             return _providerViewModel;

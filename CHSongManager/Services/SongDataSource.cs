@@ -16,12 +16,17 @@ namespace CHSongManager.Services
     public class SongDataSource : ObservableObject, ISongDataSource
     {
         private readonly ISongMapper _songMapper;
-        private ISongProvider _songProvider;
 
-        public SongDataSource(ISongMapper songMapper)
+        public SongDataSource(ISongMapper songMapper, ProviderManager providerManager)
         {
             _songMapper = songMapper;
             Criteria = SearchCriteria.Empty;
+            Providers = providerManager;
+            Providers.CurrentProviderChanged += async (s, e) =>
+            {
+                OnPropertyChanged(nameof(CurrentProvider));
+                await LoadAsync();
+            };
         }
 
         public SearchCriteria Criteria { get; }
@@ -29,13 +34,15 @@ namespace CHSongManager.Services
         public bool IsLoading { get; private set; }
         public bool IsRemoteSearch => false;
 
-        public ISongProvider SongProvider
+        public ProviderManager Providers { get; }
+
+        public ISongProvider CurrentProvider
         {
-            get => _songProvider;
+            get => Providers.Current;
             set
             {
-                Guard.NotNull(value, nameof(SongProvider));
-                _songProvider = value;
+                Guard.NotNull(value, nameof(CurrentProvider));
+                Providers.Current = value;
             }
         }
 
@@ -44,7 +51,7 @@ namespace CHSongManager.Services
             try
             {
                 IsLoading = true;
-                var songs = await SongProvider.GetAsync(Criteria);
+                var songs = await CurrentProvider.GetAsync(Criteria);
                 await Task.Run(() =>
                     Songs = CollectionViewSource.GetDefaultView(_songMapper.Map(songs)));
             }
@@ -56,7 +63,7 @@ namespace CHSongManager.Services
 
         public void ApplyConfiguration(IConfigurationOptions options)
         {
-            (_songProvider as IConfigurable)?.ApplyConfiguration(options);
+            Providers.ApplyConfiguration(options);
         }
     }
 }

@@ -13,33 +13,31 @@ namespace CHSongManager.ViewModels
     public class SelectProviderViewModel : ViewModelBase, ISelectProviderViewModel
     {
         private readonly ISongDataSource _songDataSource;
-        private readonly IEnumerable<ISongProvider> _providers;
 
         public SelectProviderViewModel()
-            : this(new MockSongDataSource(), SongProvider.MockProviders())
+            : this(new MockSongDataSource())
         {
             ThrowIfNotInDesignMode();
             LoadAsync();
         }
 
-        public SelectProviderViewModel(ISongDataSource songDataSource, IEnumerable<ISongProvider> providers)
+        public SelectProviderViewModel(ISongDataSource songDataSource)
         {
             _songDataSource = songDataSource;
-            _providers = providers;
         }
 
         public ICollectionView Providers { get; set; }
 
         public async Task LoadAsync()
         {
-            Providers = CollectionViewSource.GetDefaultView(_providers);
+            Providers = CollectionViewSource.GetDefaultView(_songDataSource.Providers);
             Providers.CurrentChanged += async (s,e)=>await CurrentProviderChangedAsync();
             await CurrentProviderChangedAsync();
         }
 
         private async Task CurrentProviderChangedAsync()
         {
-            _songDataSource.SongProvider = Providers.CurrentItem as ISongProvider;
+            _songDataSource.Providers.Current = Providers.CurrentItem as ISongProvider;
             await _songDataSource.LoadAsync();
         }
     }
