@@ -24,24 +24,24 @@ namespace CHSongManager.ViewModels
 
             DownloadSelectedCommand = new RelayCommand(DownloadSelected);
             DownloadAllCommand = new RelayCommand(DownloadAll);
-            NextCommand = new RelayCommand(Next);   
-            PrevCommand = new RelayCommand(Prev);
+            NextCommand = new RelayCommand(async ()=> await NextAsync());   
+            PrevCommand = new RelayCommand(async ()=> await PrevAsync());
 
             Page = _chorus.Page;
             _searchViewModel.Searching += (s,e) => _chorus.Page = Page = 1;
         }
 
-        private void Next()
+        private async Task NextAsync()
         {
             _chorus.Page = ++Page;
-            _songDataSource.LoadAsync();
+            await _songDataSource.LoadAsync();
         }
 
-        private void Prev()
+        private async Task PrevAsync()
         {
             if (_chorus.Page == 1) return;
             _chorus.Page = --Page;
-            _songDataSource.LoadAsync();
+            await _songDataSource.LoadAsync();
         }
 
         private void DownloadSelected()

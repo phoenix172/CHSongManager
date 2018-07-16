@@ -41,11 +41,17 @@ namespace CHSongManager.Services
 
         public async Task LoadAsync()
         {
-            IsLoading = true;
-            var songs = await SongProvider.GetAsync(Criteria);
-            await Task.Run(()=> 
-                Songs = CollectionViewSource.GetDefaultView(_songMapper.Map(songs)));
-            IsLoading = false;
+            try
+            {
+                IsLoading = true;
+                var songs = await SongProvider.GetAsync(Criteria);
+                await Task.Run(() =>
+                    Songs = CollectionViewSource.GetDefaultView(_songMapper.Map(songs)));
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
 
         public void ApplyConfiguration(IConfigurationOptions options)

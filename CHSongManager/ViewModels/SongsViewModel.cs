@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using CHSongManager.Helpers;
 using CHSongManager.Services;
@@ -44,14 +45,14 @@ namespace CHSongManager.ViewModels
             SongListVM = songListViewModel;
             SelectProviderVM = selectProviderViewModel;
 
-            LoadedCommand = new RelayCommand(Loaded);
+            LoadedCommand = new RelayCommand(async ()=>await LoadedAsync());
 
             PropagateChanges(_songDataSource, nameof(ISongDataSource.SongProvider), nameof(ProviderVM));
         }
 
-        private void Loaded()
+        private async Task LoadedAsync()
         {
-            SelectProviderVM.Load();
+            await SelectProviderVM.LoadAsync();
         }
 
         public ISearchViewModel SearchVM { get; }

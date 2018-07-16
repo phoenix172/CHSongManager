@@ -21,9 +21,9 @@ namespace CHSongManager.Services
 
         public string Name => "Local";
 
-        public Task<IEnumerable<ISong>> GetAsync(SearchCriteria criteria = null)
+        public async Task<IEnumerable<ISong>> GetAsync(SearchCriteria criteria = null)
         {
-            return Task.Run(()=>Get(criteria??SearchCriteria.Empty));
+            return await Task.Run(() => Get(criteria ?? SearchCriteria.Empty));
         }
 
         private IEnumerable<ISong> Get(SearchCriteria criteria)
@@ -60,7 +60,7 @@ namespace CHSongManager.Services
     public class SongScanException : Exception
     {
         public SongScanException(Exception innerException)
-            : base("An error occured while loading songs. See inner exception for details.", innerException)
+            : base("Cannot load songs. Check if you have set a valid songs folder.", innerException)
         {
         }
     }

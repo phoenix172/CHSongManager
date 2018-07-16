@@ -27,45 +27,45 @@ namespace CHSongManager.Tests.ViewModels
         }
 
         [Test]
-        public void Load_Initializes_ProvidersCollection()
+        public async Task Load_Initializes_ProvidersCollection()
         {
-            _viewModel.Load();
+            await _viewModel.LoadAsync();
 
             Assert.That(_viewModel.Providers, Is.EquivalentTo(_providers));
         }
 
         [Test]
-        public void Load_SetsCurrentProvider_ToFirst()
+        public async void Load_SetsCurrentProvider_ToFirst()
         {
-            _viewModel.Load();
+            await _viewModel.LoadAsync();
 
             Assert.That(_viewModel.Providers.CurrentItem, Is.EqualTo(_providers.First()));
         }
 
         [Test]
-        public void Load_SetsCurrentDataSourceProvider_ToFirst()
+        public async void Load_SetsCurrentDataSourceProvider_ToFirst()
         {
-            _viewModel.Load();
+            await _viewModel.LoadAsync();
 
             Assert.That(_dataSource.SongProvider, Is.EqualTo(_providers.First()));
         }
 
         [Test]
-        public void Providers_ChangeCurrent_SetsCurrentDataSourceProvider()
+        public async Task Providers_ChangeCurrent_SetsCurrentDataSourceProvider()
         {
-            _viewModel.Load();
+            await _viewModel.LoadAsync();
             _viewModel.Providers.MoveCurrentToLast();
 
             Assert.That(_dataSource.SongProvider, Is.EqualTo(_providers.Last()));
         }
 
         [Test]
-        public void Providers_ChangeCurrent_CallsDataSourceReloadAsync()
+        public async Task Providers_ChangeCurrent_CallsDataSourceReloadAsync()
         {
-            _viewModel.Load();
+            await _viewModel.LoadAsync();
             _viewModel.Providers.MoveCurrentToLast();
 
-            _dataSource.Received().LoadAsync();
+            await _dataSource.Received().LoadAsync();
         }
     }
 }

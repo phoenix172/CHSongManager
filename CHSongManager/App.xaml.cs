@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +12,7 @@ using CHSongManager.Services;
 using CHSongManager.Services.Interfaces;
 using CHSongManager.ViewModels;
 using CHSongManager.ViewModels.Interfaces;
+using Log_Easy;
 using Ninject;
 using Ninject.Extensions.NamedScope;
 using TinyMVVM;
@@ -30,8 +32,37 @@ namespace CHSongManager
         public App()
         {
             InitializeComponent();
+            DeleteExistingLog();
+            this.DispatcherUnhandledException += App_DispatcherUnhandledException;
             _kernel = ConfigureIoC();
             _windowManager = Resolve<IWindowManager>();
+        }
+
+        private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            Log(e.Exception.ToString());
+            MessageBox.Show($"An error occured: {e.Exception.Message}", "CHSongManager", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            e.Handled = true;
+        }
+
+        private void DeleteExistingLog()
+        {
+            try
+            {
+                if (File.Exists("log.txt"))
+                    File.Delete("log.txt");
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void Log(string message)
+        {
+            var logger = new clsLogger("log.txt", DateTime.Now.ToLongTimeString());
+            logger.LogOutput(message);
+            logger.closeFile();
         }
 
         private IKernel ConfigureIoC()

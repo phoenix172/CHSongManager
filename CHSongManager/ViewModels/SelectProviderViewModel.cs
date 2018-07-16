@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using CHSongManager.Services;
@@ -18,7 +19,7 @@ namespace CHSongManager.ViewModels
             : this(new MockSongDataSource(), SongProvider.MockProviders())
         {
             ThrowIfNotInDesignMode();
-            Load();
+            LoadAsync();
         }
 
         public SelectProviderViewModel(ISongDataSource songDataSource, IEnumerable<ISongProvider> providers)
@@ -29,23 +30,23 @@ namespace CHSongManager.ViewModels
 
         public ICollectionView Providers { get; set; }
 
-        public void Load()
+        public async Task LoadAsync()
         {
             Providers = CollectionViewSource.GetDefaultView(_providers);
-            Providers.CurrentChanged += (s,e)=>CurrentProviderChanged();
-            CurrentProviderChanged();
+            Providers.CurrentChanged += async (s,e)=>await CurrentProviderChangedAsync();
+            await CurrentProviderChangedAsync();
         }
 
-        private void CurrentProviderChanged()
+        private async Task CurrentProviderChangedAsync()
         {
             _songDataSource.SongProvider = Providers.CurrentItem as ISongProvider;
-            _songDataSource.LoadAsync();
+            await _songDataSource.LoadAsync();
         }
     }
 
     public interface ISelectProviderViewModel
     {
         ICollectionView Providers { get; }
-        void Load();
+        Task LoadAsync();
     }
 }
