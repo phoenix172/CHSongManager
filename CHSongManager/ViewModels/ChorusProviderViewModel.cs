@@ -7,6 +7,7 @@ using CHSongManager.Services;
 using CHSongManager.Services.Interfaces;
 using CHSongManager.ViewModels.Interfaces;
 using TinyMVVM;
+using TinyMVVM.Commands;
 
 namespace CHSongManager.ViewModels
 {

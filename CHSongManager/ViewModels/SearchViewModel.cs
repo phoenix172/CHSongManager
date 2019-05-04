@@ -9,6 +9,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using TinyMVVM;
+using TinyMVVM.Commands;
 using TinyMVVM.Utilities;
 
 namespace CHSongManager.ViewModels

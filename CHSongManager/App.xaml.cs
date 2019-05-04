@@ -18,6 +18,7 @@ using Ninject.Extensions.NamedScope;
 using TinyMVVM;
 using TinyMVVM.Extensions;
 using TinyMVVM.Interfaces;
+using TinyMVVM.Extensions;
 
 namespace CHSongManager
 {
@@ -104,7 +105,11 @@ namespace CHSongManager
         private void ShowMainWindow()
         {
             var mainViewModel = Resolve<IMainViewModel>();
-            _windowManager.ConfigureMaximized<IMainViewModel>();
+            _windowManager.Configure<IMainViewModel>(window =>
+            {
+                window.SizeToContent = SizeToContent.Manual;
+                window.WindowState = WindowState.Maximized;
+            });
             _windowManager.Show(mainViewModel);
         }
 
